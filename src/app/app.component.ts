@@ -21,8 +21,6 @@ export class AppComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.remainingDeckSubscription = this._cardService.getRemainingDeckStream().subscribe(x => this.remainingDeck = x);
     this.dealtCardsSubscription = this._cardService.getDealtCardsStream().subscribe(x => this.dealtCards = x);
-    const deck = this._cardService.initializeDeck();
-    this._cardService.setRemainingDeckStream(deck);
   }
 
   ngOnDestroy(): void {
@@ -36,5 +34,9 @@ export class AppComponent implements OnInit, OnDestroy{
       this.dealtCards.push(this._cardService.dealOneCard(currentDeck));
       this._cardService.setDealtCardsStream(currentDeck);
     }
+  }
+
+  onShuffleClicked(): void {
+    this._cardService.shuffleDeck();
   }
 }

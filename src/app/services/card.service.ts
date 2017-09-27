@@ -3,14 +3,18 @@ import {Subject} from "rxjs/Subject";
 import {Card} from "../models/card.model";
 import {Observable} from "rxjs/Observable";
 import {CARD_VALUES, SUITS} from "../app.const";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class CardService {
 
-  private _remainingDeck: Subject<Card[]> = new Subject();
-  private _dealtCards: Subject<Card[]> = new Subject();
+  private _remainingDeck: BehaviorSubject<Card[]>;
+  private _dealtCards: BehaviorSubject<Card[]>;
 
-  constructor() { }
+  constructor() {
+    this._remainingDeck = new BehaviorSubject(this.initializeDeck());
+    this._dealtCards = new BehaviorSubject([]);
+  }
 
   getRemainingDeckStream(): Observable<Card[]> {
     return this._remainingDeck;
@@ -39,6 +43,21 @@ export class CardService {
   }
   setDealtCardsStream(deck: Card[]): void {
     this._dealtCards.next(deck);
+  }
+
+  private shuffleArray(deck: any[]): any[] { // Fisher-Yates shuffle
+    const newDeck = deck.slice();
+    for (let i = deck.length; i; i--) {
+      let j = Math.floor(Math.random() * i);
+      [deck[i - 1], deck[j]] = [deck[j], deck[i - 1]];
+    }
+    return newDeck;
+  }
+
+  shuffleDeck(): void {
+    const shuffledDeck = this.shuffleArray(this.initializeDeck());
+    this.setRemainingDeckStream(shuffledDeck);
+    this.setDealtCardsStream([]);
   }
 
 }
