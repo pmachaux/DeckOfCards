@@ -47,17 +47,21 @@ export class CardService {
 
   private shuffleArray(deck: any[]): any[] { // Fisher-Yates shuffle
     const newDeck = deck.slice();
-    for (let i = deck.length; i; i--) {
+    for (let i = newDeck.length; i > 0; i--) {
       let j = Math.floor(Math.random() * i);
-      [deck[i - 1], deck[j]] = [deck[j], deck[i - 1]];
+      [newDeck[i - 1], newDeck[j]] = [newDeck[j], newDeck[i - 1]];
     }
     return newDeck;
   }
 
-  shuffleDeck(): void {
+  shuffleAllDeckCards(): void {
     const shuffledDeck = this.shuffleArray(this.initializeDeck());
     this.setRemainingDeckStream(shuffledDeck);
     this.setDealtCardsStream([]);
   }
 
+  shuffleRemainingDeckCards(deck: Card[]): void {
+    const shuffledDeck = this.shuffleArray(deck);
+    this.setRemainingDeckStream(shuffledDeck);
+  }
 }

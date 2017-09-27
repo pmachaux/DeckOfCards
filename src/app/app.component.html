@@ -1,7 +1,28 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
+<div class="app-container">
+  <div style="text-align:center">
+    <h1>
+      Welcome to {{title}}!
+    </h1>
+  </div>
+  <div class="cards-decks">
+    <div class="deck">
+      <h2>Deck</h2>
+      <div *ngFor="let card of remainingDeck">
+        {{card.value}} of {{card.suit}}
+      </div>
+    </div>
+    <div class="deck">
+      <div style="display: block">
+        <h2>Dealt card</h2>
+      </div>
+      <div *ngFor="let card of dealtCards" class="app-card">
+        {{card.value}} of {{card.suit}}
+      </div>
+    </div>
+  </div>
+  <div class="app-buttons">
+    <button class="btn btn-danger" (click)="onShuffleAllCardsClicked()">Reset and shuffle</button>
+    <button class="btn btn-info" (click)="onShuffleRemainingDeck()">Shuffle deck</button>
+    <button class="btn btn-success" (click)="onDealOneCardClicked()">Deal one card</button>
+  </div>
 </div>
-
-

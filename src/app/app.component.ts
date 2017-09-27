@@ -32,11 +32,16 @@ export class AppComponent implements OnInit, OnDestroy{
     if (this.remainingDeck.length > 0) {
       const currentDeck = this.remainingDeck.slice();
       this.dealtCards.push(this._cardService.dealOneCard(currentDeck));
-      this._cardService.setDealtCardsStream(currentDeck);
+      this._cardService.setDealtCardsStream(this.dealtCards);
+      this._cardService.setRemainingDeckStream(currentDeck);
     }
   }
 
-  onShuffleClicked(): void {
-    this._cardService.shuffleDeck();
+  onShuffleAllCardsClicked(): void {
+    this._cardService.shuffleAllDeckCards();
+  }
+
+  onShuffleRemainingDeck(): void {
+    this._cardService.shuffleRemainingDeckCards(this.remainingDeck);
   }
 }

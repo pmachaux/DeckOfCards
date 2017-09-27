@@ -1,0 +1,30 @@
+.cards-decks {
+ position: absolute;
+  top:50px;
+  bottom: 70px;
+  width: 100%;
+  display: flex;
+}
+.deck {
+  overflow-y: auto;
+  max-height: 100%;
+  width: 50%;
+  display: inline-block;
+  padding: 15px;
+}
+.app-buttons{
+  position: absolute;
+  bottom: 10px;
+  text-align: center;
+  width: 100%;
+}
+.app-card{
+  display: block;
+}
+.app-container{
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+}
