@@ -30,6 +30,10 @@ export class CardService {
     return deck;
   }
 
+  dealOneCard(currentDeck: Card[]): Card {
+    return currentDeck.splice(0,1)[0];
+  }
+
   setRemainingDeckStream(deck: Card[]): void {
     this._remainingDeck.next(deck);
   }

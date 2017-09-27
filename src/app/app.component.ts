@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy{
   remainingDeckSubscription: Subscription;
   dealtCardsSubscription: Subscription;
 
-  constructor(private _cardService: CardService){}
+  constructor(private _cardService: CardService) { }
 
   ngOnInit(): void {
     this.remainingDeckSubscription = this._cardService.getRemainingDeckStream().subscribe(x => this.remainingDeck = x);
@@ -28,5 +28,13 @@ export class AppComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.remainingDeckSubscription.unsubscribe();
     this.dealtCardsSubscription.unsubscribe();
+  }
+
+  onDealOneCardClicked(): void {
+    if (this.remainingDeck.length > 0) {
+      const currentDeck = this.remainingDeck.slice();
+      this.dealtCards.push(this._cardService.dealOneCard(currentDeck));
+      this._cardService.setDealtCardsStream(currentDeck);
+    }
   }
 }

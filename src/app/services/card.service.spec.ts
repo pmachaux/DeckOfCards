@@ -2,6 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { CardService } from './card.service';
 import {CARD_VALUE_ACE, SUIT_CLUB, SUIT_DIAMOND, SUIT_HEART, SUIT_SPADE} from "../app.const";
+import {Card} from "../models/card.model";
 
 describe('CardService', () => {
   let cardService: CardService;
@@ -12,6 +13,27 @@ describe('CardService', () => {
     cardService = new CardService();
   });
 
+
+  describe('dealOneCard', () => {
+    let deck:Card[];
+    let card1 = new Card('suit1', 'value1');
+    let card2 = new Card('suit2', 'value2');
+    let card3 =  new Card('suit3', 'value3');
+    it('should remove the first card of the deck and return it', () => {
+      deck = [card1, card2, card3];
+      const dealtCard = cardService.dealOneCard(deck);
+      expect(dealtCard).toBe(card1);
+      expect(deck.length).toBe(2);
+      expect(deck[0]).toBe(card2);
+      expect(deck[1]).toBe(card3);
+    });
+    it('it should return undefined and let the deck intact because there is no card left', () => {
+      deck = [];
+      const dealtCard = cardService.dealOneCard(deck);
+      expect(dealtCard).toBeUndefined();
+      expect(deck.length).toBe(0);
+    });
+  });
 
   describe('deck initialization', () => {
     it('should create a deck with 52 elements in it', () => {
